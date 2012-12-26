@@ -3,4 +3,8 @@
 # Package Files #
 *.jar
 *.war
+<<<<<<< HEAD
 *.ear
+=======
+*.ear
+>>>>>>> branch 'master' of https://github.com/inukurax/OOPD-Eksamen-2011.git

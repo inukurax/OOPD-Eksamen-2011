@@ -26,7 +26,11 @@ import model.Position;
  */
 public class TronDisplayPanel extends JPanel implements Observer
 {
-    private int                 scaleFactor;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5870871032963104062L;
+	private int                 scaleFactor;
     private int                 width;
     private int                 height;
     private MemoryImageSource   source;

@@ -2,6 +2,7 @@ package model;
 
 import java.util.Collection;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * A class representing a position or position on the Tron board.
@@ -41,11 +42,14 @@ public class Position
     // Assumes non null position //
     public Position getNeighbour(Direction direction)
     {
+    	if (direction == null) {
+    		return this;
+    	}
 		switch (direction) {
-		case NORTH : return new Position(x, y+1);
-		case SOUTH : return new Position(x, y-1);
-		case EAST  : return new Position(x+1, y);
-		case WEST  : return new Position(x-1, y);
+		case NORTH : return new Position(this.getX(), this.getY()+1);
+		case SOUTH : return new Position(this.getX(), this.getY()-1);
+		case EAST  : return new Position(this.getX()+1, this.getY());
+		case WEST  : return new Position(this.getX()-1, this.getY());
 		}
 		return null;
     }

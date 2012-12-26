@@ -43,14 +43,13 @@ public class GameManager extends Observable
         		board.occupyField(player.getPosition());
     			Direction currentMove = player.getDirection();
     			Direction nextMove = player.nextMove(game);
-				player.performMove(nextMove);
-
-    			if (nextMove == null || currentMove == null) {
-    				System.out.println("wow null");
-    				return;
-    			}
-				if (currentMove.getOpposite() == (nextMove)) {
-					player.performMove(player.getDirection());
+    			
+    			if (nextMove == null)
+					player.performMove(currentMove);
+    			else if (currentMove == null)
+    				player.performMove(nextMove);
+    			else if (currentMove.getOpposite() == (nextMove)) {
+					player.performMove(currentMove);
 				}
 				else
 					player.performMove(nextMove);

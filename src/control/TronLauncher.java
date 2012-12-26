@@ -39,16 +39,26 @@ public class TronLauncher
         // To be implemented by the student
         NewGameDialog gameDialog = new NewGameDialog(null, true);
         Configuration config = gameDialog.getConfig();
+        
         Collection<Player> players = gameDialog.getPlayers();
+        
         GameManager game = new GameManager(config, players);
+        
         TronDisplayPanel tronDisplay = new TronDisplayPanel(config.getHeight(), 
         		config.getWidth(), config.getScaleFactor());
         
-        GUIController test = new GUIController(game);
+        
+        GUIController guiController = new GUIController(game);
+        
         new MainWindowFrame(tronDisplay);
-        tronDisplay.init(game.getGame(), players);
+        game.addObserver(tronDisplay);
 
-        test.run();
+        tronDisplay.init(game.getGame(), players);
+        tronDisplay.update(game, players);
+       
+        guiController.run();
+        
+
         	
         	
     }

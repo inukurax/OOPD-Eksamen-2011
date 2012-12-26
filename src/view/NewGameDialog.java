@@ -47,7 +47,6 @@ public class NewGameDialog extends JDialog implements ActionListener
     private ArrayList<Player> players;
     public Color[] farve;
     private boolean humanPlayer = false;
-	private Component owner;
 	private JCheckBox checkButton;
 	private JButton okButton;
 	private JButton closeButton;

@@ -1,6 +1,8 @@
 package model.strategies;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Random;
 
 import model.Direction;
 import model.Game;
@@ -17,13 +19,19 @@ import model.Position;
 public class RandomStrategy implements IStrategy
 {
 
+	private Random random = new Random();
+
 	/* (non-Javadoc)
 	 * @see model.strategies.IStrategy#nextMove(model.Game, model.Player)
 	 */
 	@Override
 	public Direction nextMove(Game game, Player player) {
+
 		Position position = player.getPosition();		
-		Collection<Direction> directions = Direction.shuffledValues();
+		ArrayList<Direction> directions = (ArrayList<Direction>) Direction.shuffledValues();
+		
+		if (player.getDirection() == null)
+			return directions.get(random .nextInt(3));
 		
 		for (Direction direction : directions) {
 			if (!game.isOccupied(position.getNeighbour(direction)))

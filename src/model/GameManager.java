@@ -52,7 +52,7 @@ public class GameManager extends Observable
     			else if (currentMove == null)
     				player.performMove(nextMove);
     			else if (currentMove.getOpposite() == (nextMove)) {
-    				takeTurn();
+    				player.performMove(currentMove);
 				}
 				else
 					player.performMove(nextMove);

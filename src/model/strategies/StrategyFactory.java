@@ -16,7 +16,9 @@ public class StrategyFactory
     public enum Type
     {
         RANDOM("Random", RandomStrategy.class),
-        WALL_HUGGER("Wall-Hugger", WallHuggerStrategy.class);
+        WALL_HUGGER("Wall-Hugger", WallHuggerStrategy.class),
+        STUPID("Stupid", StupidStrategy.class);
+
         
         private String strategyName;
         private Class<? extends IStrategy> strategyClass;

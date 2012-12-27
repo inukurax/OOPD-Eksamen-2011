@@ -18,29 +18,24 @@ import model.Position;
  */
 public class RandomStrategy implements IStrategy
 {
-	private Random random = new Random();
 
-	/* (non-Javadoc)
-	 * @see model.strategies.IStrategy#nextMove(model.Game, model.Player)
-	 */
 	@Override
 	public Direction nextMove(Game game, Player player) {
 
 		Position position = player.getPosition();		
-		ArrayList<Direction> directions = (ArrayList<Direction>) Direction.shuffledValues();
+		ArrayList<Direction> directions = (ArrayList<Direction>) 
+				Direction.shuffledValues();
+		
 		Direction currentDirection = player.getDirection();
-		if (currentDirection == null) {
-			Direction randomDirection = directions.get(random .nextInt(3));
-			if (!game.isOccupied(position.getNeighbour(randomDirection)))
-				return randomDirection;
-		}
 		
 		for (Direction direction : directions) {
-			if (!game.isOccupied(position.getNeighbour(direction)))
+			boolean isOccup = game.isOccupied(position.getNeighbour(direction));
+			if (currentDirection == null  && !isOccup)
+				return direction;
+			if (!isOccup) 
 				return direction;
 		}
-		
-		return player.getDirection();
+		return currentDirection;
 	}
 		 
 	

@@ -38,10 +38,11 @@ public class MainWindowFrame extends JFrame
     {
     	setTitle("Tron game");
     	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	
     	add(tronDisplayPanel);
     	gameInput = new GameInput();
     	addKeyListener(gameInput);
-
+    	
     	pack();
     	setVisible(true);
     }

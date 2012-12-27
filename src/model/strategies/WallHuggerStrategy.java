@@ -1,6 +1,7 @@
 package model.strategies;
 
 import java.util.Collection;
+import java.util.Random;
 
 import model.Direction;
 import model.Game;
@@ -22,48 +23,67 @@ public class WallHuggerStrategy implements IStrategy
 	 */
 	@Override
 	public Direction nextMove(Game game, Player player) {
-		Position position = player.getPosition();		
+		Position position = player.getPosition();	
+		Direction currentDirection = player.getDirection();
+		Position NorthPos = player.getPosition().getNeighbour(Direction.NORTH);
+		Position SouthPos = player.getPosition().getNeighbour(Direction.SOUTH);
+		Position EastPos = player.getPosition().getNeighbour(Direction.EAST);
+		Position WestPos = player.getPosition().getNeighbour(Direction.WEST);
+
 		Collection<Direction> directions = Direction.shuffledValues();
-		
-		for (Direction direction : directions) {
-			Position newPos = position.getNeighbour(direction);
-			if (game.isOccupied(newPos)) {
-				
-				if (newPos.getY() > player.getPosition().getY() ||
-						newPos.getY() < player.getPosition().getY()) {
-					// wall north or south , walk east if possible else west
-					Position posEast = new Position(
-										player.getPosition().getX() + 1,
-									player.getPosition().getY());
-					Position posWest = new Position(
-										player.getPosition().getX() - 1,
-									player.getPosition().getY());
-					
-					if (!game.isOccupied(posEast)) 
-						return Direction.EAST;
-					if (!game.isOccupied(posWest))
-						return Direction.WEST;
-					
-					return player.getDirection().getOpposite();
-					
-				}
-				else {
-					// wall east or west, walk north or south
-					Position posNorth = new Position(player.getPosition().getX(),
-							player.getPosition().getY() - 1);
-					Position posSouth = new Position(player.getPosition().getX(),
-							player.getPosition().getY() + 1);
-					if (!game.isOccupied(posNorth)) 
-						return Direction.NORTH;
-					if (!game.isOccupied(posSouth))
-						return Direction.SOUTH;
-					
-					return player.getDirection().getOpposite();
-				}
+   	 Random random = new Random();
+
+			for (Direction direction : directions) {
+				boolean isOccup = game.isOccupied(position.getNeighbour(direction));
+				if (currentDirection == null  && !isOccup)
+					return direction;
 			}
-				
-		}
-			return player.getDirection();
+			if (currentDirection != null && !game.isOccupied(position.getNeighbour(currentDirection)))
+				return currentDirection;
+			switch (currentDirection) {
+			case NORTH : if (game.isOccupied(NorthPos) && game.isOccupied(WestPos)) 
+							return Direction.EAST;
+			             if (game.isOccupied(NorthPos) && game.isOccupied(EastPos)) 
+			            	return Direction.WEST;
+			             if (game.isOccupied(NorthPos)) {
+			            	if (random.nextInt(1) == 1)
+			            		return Direction.WEST;
+			            	else 
+			            		return Direction.EAST;
+			             }
+			case SOUTH : if (game.isOccupied(SouthPos) && game.isOccupied(WestPos)) 
+								return Direction.EAST;
+				         if (game.isOccupied(SouthPos) && game.isOccupied(EastPos)) 
+				           	return Direction.WEST;
+				         if (game.isOccupied(SouthPos)) {
+				           	if (random.nextInt(1) == 1)
+				           		return Direction.WEST;
+				           	else 
+				           		return Direction.EAST;
+				         }
+			case EAST : if (game.isOccupied(EastPos) && game.isOccupied(SouthPos)) 
+									return Direction.NORTH;
+					    if (game.isOccupied(EastPos) && game.isOccupied(NorthPos)) 
+						           	return Direction.SOUTH;
+						if (game.isOccupied(EastPos)) {
+							if (random.nextInt(1) == 1)
+								return Direction.SOUTH;
+						  	else 
+						        return Direction.NORTH;
+						}
+			case WEST : if (game.isOccupied(WestPos) && game.isOccupied(SouthPos)) 
+									return Direction.NORTH;
+					    if (game.isOccupied(WestPos) && game.isOccupied(NorthPos)) 
+						           	return Direction.SOUTH;
+						if (game.isOccupied(WestPos)) {
+							if (random.nextInt(1) == 1)
+								return Direction.SOUTH;
+						  	else 
+						        return Direction.NORTH;
+						}
+			}
+	
+		return currentDirection;
 	}   
 	
 }

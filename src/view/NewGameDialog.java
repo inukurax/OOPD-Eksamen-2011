@@ -42,6 +42,8 @@ public class NewGameDialog extends JDialog implements ActionListener
 
 	private static final long serialVersionUID = 1L;
 	private Configuration config = null;
+    private JFrame owner;
+
     private HumanPlayer human;
     private ArrayList<Player> players;
     public Color[] farve;
@@ -66,6 +68,7 @@ public class NewGameDialog extends JDialog implements ActionListener
      */
     public NewGameDialog(JFrame owner, boolean modal) throws FileNotFoundException, ParserException    {
         super(owner, modal);
+        this.owner = owner;
         setConfig(); 
         playerCount = config.getStartPositions().size();
         
@@ -149,9 +152,11 @@ public class NewGameDialog extends JDialog implements ActionListener
         
         closeButton.addActionListener(new ActionListener()
         {
-            public void actionPerformed(ActionEvent e)
+
+			public void actionPerformed(ActionEvent e)
             {
             	setVisible(false);
+            	dispose();
             }
         });
 
@@ -222,7 +227,7 @@ public class NewGameDialog extends JDialog implements ActionListener
 					e1.printStackTrace();
 				}
 			if (players.size() >= 2)
-    			dispose();
+    			setVisible(false);
 			else
 				System.err.println("Need two players, only got " + players.size());
     }

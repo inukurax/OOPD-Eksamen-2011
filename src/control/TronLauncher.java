@@ -1,8 +1,13 @@
 package control;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.util.Collection;
 
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.UIManager;
 
 import model.GameManager;
@@ -23,6 +28,9 @@ import view.TronDisplayPanel;
  */
 public class TronLauncher
 {
+	static JMenuBar menuBar;
+	static JMenu menu, submenu;
+	static JMenuItem menuItem;
     /**
      * Main entry point for the application.
      * @throws ParserException 
@@ -37,7 +45,7 @@ public class TronLauncher
         catch (Exception _) { } // Just ignore this.
         MainWindowFrame mainWindow = null;
 
-        NewGameDialog gameDialog = new NewGameDialog(mainWindow, true);
+        final NewGameDialog gameDialog = new NewGameDialog(mainWindow, true);
         
         Configuration config = gameDialog.getConfig();
         
@@ -50,6 +58,18 @@ public class TronLauncher
         
         GUIController guiController = new GUIController(game);
         mainWindow = new MainWindowFrame(tronDisplay);
+        // setup main window buttons
+        menuBar = new JMenuBar();
+        menu = new JMenu("File");
+        menuItem = new JMenuItem("New Game");
+        menuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				gameDialog.setVisible(true);
+			}
+        	
+        });
+
         
         
         tronDisplay.init(game.getGame(), game.getPlayers());

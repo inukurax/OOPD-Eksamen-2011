@@ -13,6 +13,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import model.Direction;
+import model.HumanPlayer;
 import model.config.ParserException;
 
 
@@ -26,8 +27,7 @@ import model.config.ParserException;
 public class MainWindowFrame extends JFrame
 {
     private GameInput gameInput;
-	private JMenu fileMenu;
-	private JMenuBar menuBar;
+
     
     /**
      * Creates a new main window with an image panel.
@@ -39,10 +39,17 @@ public class MainWindowFrame extends JFrame
     	setTitle("Tron game");
     	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	add(tronDisplayPanel);
+    	gameInput = new GameInput();
+    	addKeyListener(gameInput);
+
     	pack();
     	setVisible(true);
     }
     
+    public void setHumanObserver(HumanPlayer humanPlayer) {
+    	if (humanPlayer != null)
+    		gameInput.addObserver(humanPlayer);
+    }
     /**
      * A class for listening to the keyboard for arrow key strokes.
      * Notifies observers with a direction corresponding to the key pressed.

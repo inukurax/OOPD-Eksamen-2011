@@ -46,6 +46,7 @@ public class TronDisplayPanel extends JPanel implements Observer
      */
     public TronDisplayPanel(int width, int height, int scaleFactor)
     {
+    
         this.width         = width;
         this.height        = height;
         this.scaleFactor   = scaleFactor;
@@ -85,7 +86,6 @@ public class TronDisplayPanel extends JPanel implements Observer
      * @param   o   the observed object
      * @param   arg the argument given by the observed object
      */
-    @SuppressWarnings("unchecked")
     public void update(Observable o, Object arg)
     {
         if (o instanceof GameManager)
@@ -96,7 +96,6 @@ public class TronDisplayPanel extends JPanel implements Observer
             for (Object obj : players)
             {
                 Player player   = (Player)obj;
-                
                 Position previousPosition = player.getPreviousPosition();
                 if (previousPosition != null)
                     this.paintBrightPixel(player.getColor(), previousPosition);

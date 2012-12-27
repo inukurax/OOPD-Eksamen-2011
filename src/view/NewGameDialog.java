@@ -18,6 +18,7 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -38,9 +39,7 @@ import model.strategies.StrategyFactory;
  */
 public class NewGameDialog extends JDialog implements ActionListener
 {
-    /**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private Configuration config = null;
     private HumanPlayer human;
@@ -51,6 +50,7 @@ public class NewGameDialog extends JDialog implements ActionListener
 	private JButton okButton;
 	private JButton closeButton;
 	private JLabel setupLabel;
+	private int playerCount = -1;
 	
 	 
 	public PlayerPanel player1, pc1, pc2, pc3;
@@ -67,8 +67,14 @@ public class NewGameDialog extends JDialog implements ActionListener
     public NewGameDialog(JFrame owner, boolean modal) throws FileNotFoundException, ParserException    {
         super(owner, modal);
         setConfig(); 
+        playerCount = config.getStartPositions().size();
+        
+  
+        if (playerCount >= 2) {
         if (config != null)
-        	openDialog();
+        	openDialog(playerCount);
+        }
+        else JOptionPane.showMessageDialog(owner, "Wrong config, not enough players");
 
      }
     
@@ -88,7 +94,7 @@ public class NewGameDialog extends JDialog implements ActionListener
 		       System.out.println("No config file selected!");
     }
     
-    public void openDialog() {
+    public void openDialog(int playerCount) {
         FlowLayout experimentLayout = new FlowLayout();
         setPreferredSize( new Dimension(300,280));  
 		setTitle("Game Setup");
@@ -110,6 +116,15 @@ public class NewGameDialog extends JDialog implements ActionListener
         add(pc2);
         add(pc3);
 
+        switch (playerCount) {
+        case 2 : 	     pc2.setComboBoxEnabled(false);
+	     pc3.setComboBoxEnabled(false);
+        	     break;
+        case 3 :
+	     		 pc3.setComboBoxEnabled(false);
+	     		 break;
+
+        }
         
         okButton = new JButton("Ok");
         closeButton = new JButton("Close");

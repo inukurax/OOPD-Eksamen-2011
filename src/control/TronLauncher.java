@@ -35,9 +35,10 @@ public class TronLauncher
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }
         catch (Exception _) { } // Just ignore this.
+        MainWindowFrame mainWindow = null;
+
+        NewGameDialog gameDialog = new NewGameDialog(mainWindow, true);
         
-        // To be implemented by the student
-        NewGameDialog gameDialog = new NewGameDialog(null, true);
         Configuration config = gameDialog.getConfig();
         
         Collection<Player> players = gameDialog.getPlayers();
@@ -47,19 +48,16 @@ public class TronLauncher
         TronDisplayPanel tronDisplay = new TronDisplayPanel(config.getHeight(), 
         		config.getWidth(), config.getScaleFactor());
         
-        
         GUIController guiController = new GUIController(game);
+        mainWindow = new MainWindowFrame(tronDisplay);
         
-        new MainWindowFrame(tronDisplay);
+        
+        tronDisplay.init(game.getGame(), game.getPlayers());
+        
+        mainWindow.setHumanObserver(gameDialog.getHuman());
         game.addObserver(tronDisplay);
-
-        tronDisplay.init(game.getGame(), players);
-        tronDisplay.update(game, players);
-       
-        guiController.run();
+     
+        guiController.run(); 
         
-
-        	
-        	
     }
 }

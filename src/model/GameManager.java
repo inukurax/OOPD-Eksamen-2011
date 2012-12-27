@@ -19,6 +19,7 @@ public class GameManager extends Observable
     private Board board;
     private Collection<Player> players;
     private Game  game;
+	private int count;
     
     /**
      * Constructs a new game manager from a configuration and a collection of players
@@ -39,6 +40,8 @@ public class GameManager extends Observable
     public void takeTurn()
     {
     	for (Player player : this.players) {
+			if (game.isOccupied(player.getPosition()))
+				player.kill();
     		if (player.isAlive()) {
         		board.occupyField(player.getPosition());
     			Direction currentMove = player.getDirection();
@@ -49,13 +52,15 @@ public class GameManager extends Observable
     			else if (currentMove == null)
     				player.performMove(nextMove);
     			else if (currentMove.getOpposite() == (nextMove)) {
-					player.performMove(currentMove);
+    				takeTurn();
 				}
 				else
 					player.performMove(nextMove);
     		}
     		
     	}
+    	this.setChanged();
+        this.notifyObservers(players);
     }
     
     /**

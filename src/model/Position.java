@@ -32,7 +32,7 @@ public class Position
 	 * @return true if x and y value for other is equal to the positions,
 	 * otherwise false.
 	 */
-	@Override
+	@Override 
 	public boolean equals(Object other) {
 		if (other == null)
 			return false;
@@ -46,8 +46,8 @@ public class Position
     		return this;
     	}
 		switch (direction) {
-		case NORTH : return new Position(this.getX(), this.getY()+1);
-		case SOUTH : return new Position(this.getX(), this.getY()-1);
+		case NORTH : return new Position(this.getX(), this.getY()-1);
+		case SOUTH : return new Position(this.getX(), this.getY()+1);
 		case EAST  : return new Position(this.getX()+1, this.getY());
 		case WEST  : return new Position(this.getX()-1, this.getY());
 		}

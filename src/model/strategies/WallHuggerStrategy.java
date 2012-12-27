@@ -50,9 +50,9 @@ public class WallHuggerStrategy implements IStrategy
 				else {
 					// wall east or west, walk north or south
 					Position posNorth = new Position(player.getPosition().getX(),
-							player.getPosition().getY() + 1);
-					Position posSouth = new Position(player.getPosition().getX(),
 							player.getPosition().getY() - 1);
+					Position posSouth = new Position(player.getPosition().getX(),
+							player.getPosition().getY() + 1);
 					if (!game.isOccupied(posNorth)) 
 						return Direction.NORTH;
 					if (!game.isOccupied(posSouth))
@@ -63,7 +63,7 @@ public class WallHuggerStrategy implements IStrategy
 			}
 				
 		}
-		return player.getDirection();
+			return player.getDirection();
 	}   
 	
 }

@@ -18,7 +18,6 @@ import model.Position;
  */
 public class RandomStrategy implements IStrategy
 {
-
 	private Random random = new Random();
 
 	/* (non-Javadoc)
@@ -29,9 +28,12 @@ public class RandomStrategy implements IStrategy
 
 		Position position = player.getPosition();		
 		ArrayList<Direction> directions = (ArrayList<Direction>) Direction.shuffledValues();
-		
-		if (player.getDirection() == null)
-			return directions.get(random .nextInt(3));
+		Direction currentDirection = player.getDirection();
+		if (currentDirection == null) {
+			Direction randomDirection = directions.get(random .nextInt(3));
+			if (!game.isOccupied(position.getNeighbour(randomDirection)))
+				return randomDirection;
+		}
 		
 		for (Direction direction : directions) {
 			if (!game.isOccupied(position.getNeighbour(direction)))

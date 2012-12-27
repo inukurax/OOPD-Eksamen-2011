@@ -69,7 +69,7 @@ public class TextParser implements IParser
 
 
 			while (scan.hasNextLine()) {
-				if (scan.hasNext(pattern)) { 
+				if (scan.hasNextInt()) { 
 					scan.findInLine(pattern);
 					MatchResult result = scan.match();
 					width = Integer.parseInt(result.group(1));

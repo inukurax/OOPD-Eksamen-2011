@@ -21,6 +21,7 @@ public abstract class Player
     private String      name;
     private boolean     alive;
     private int         score;
+    private boolean human;
 
     /**
      * Creates a new Player object with the given color and name.
@@ -62,7 +63,6 @@ public abstract class Player
     {
         if (!alive)
             throw new IllegalStateException("Player is not alive");
-        
         this.direction  = direction;
         this.position   = position.getNeighbour(direction);
         this.score++;

@@ -98,8 +98,6 @@ public class TextParser implements IParser
 				scan.nextLine();
 			}
 			scan.close();
-			System.out.println(String.format("width: %d , height: %d , scale: %d"
-					, width, height, scaleFactor));
 			return new Configuration(width, height, scaleFactor,
 					lineSegments, startPositions);
 		} catch (FileNotFoundException e) {

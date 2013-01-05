@@ -26,7 +26,6 @@ public class Board
     {
         this.height = height;
         this.width = width;
-        // should add player start positions
         occupiedPositions = new ArrayList<Position>();
       
     }
